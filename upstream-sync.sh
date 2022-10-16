@@ -46,13 +46,13 @@ fi
 echo 'New commits being pulled:' 1>&1
 git log upstream/"${INPUT_TARGET_BRANCH}" "${LOCAL_COMMIT_HASH}"..HEAD --pretty=oneline
 
-git merge "${INPUT_UPSTREAM_BRANCH}" --allow-unrelated-histories
+# git merge "${INPUT_UPSTREAM_BRANCH}" --allow-unrelated-histories
 # pull from upstream to target_branch
 echo 'Pulling...' 1>&1
-git pull upstream "${INPUT_UPSTREAM_BRANCH}"
+git pull upstream "${INPUT_UPSTREAM_BRANCH}" --allow-unrelated-histories
 echo 'Pull successful' 1>&1
 
 # push to origin target_branch
 echo 'Pushing to target branch...' 1>&1
-git push origin "${INPUT_TARGET_BRANCH}"
+git push origin "${INPUT_TARGET_BRANCH}" --allow-unrelated-histories
 echo 'Push successful' 1>&1
