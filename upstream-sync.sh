@@ -6,6 +6,8 @@ sudo apt install git
 
 set -e
 
+git config --global user.email "test@gmail.com"
+git config --global user.name "upsteam syncer"
 # fail if upstream_repository is not set in workflow
 if [ -z "${INPUT_UPSTREAM_REPOSITORY}" ]; then
     echo 'Workflow missing input value for "upstream_repository"' 1>&2
