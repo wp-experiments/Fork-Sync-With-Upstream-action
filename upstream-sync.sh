@@ -4,6 +4,7 @@ sudo add-apt-repository ppa:git-core/ppa
 sudo apt-get update
 sudo apt install git
 
+git --version
 set -e
 
 git config --global user.email "test@gmail.com"
