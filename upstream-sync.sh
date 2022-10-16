@@ -8,6 +8,9 @@ set -e
 
 git config --global user.email "test@gmail.com"
 git config --global user.name "upsteam syncer"
+
+git reset HEAD~
+git stash
 # fail if upstream_repository is not set in workflow
 if [ -z "${INPUT_UPSTREAM_REPOSITORY}" ]; then
     echo 'Workflow missing input value for "upstream_repository"' 1>&2
@@ -33,6 +36,8 @@ git remote add upstream "${UPSTREAM_REPO}"
 git fetch upstream master
 LOCAL_COMMIT_HASH=$(git rev-parse "${INPUT_TARGET_BRANCH}")
 UPSTREAM_COMMIT_HASH=$(git rev-parse upstream/"${INPUT_UPSTREAM_BRANCH}")
+
+git stash apply
 
 if [ "${LOCAL_COMMIT_HASH}" = "${UPSTREAM_COMMIT_HASH}" ]; then
     echo 'No new commits to sync, exiting' 1>&1
