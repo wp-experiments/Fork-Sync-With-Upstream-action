@@ -9,8 +9,6 @@ set -e
 git config --global user.email "test@gmail.com"
 git config --global user.name "upsteam syncer"
 
-git reset HEAD~
-git stash
 # fail if upstream_repository is not set in workflow
 if [ -z "${INPUT_UPSTREAM_REPOSITORY}" ]; then
     echo 'Workflow missing input value for "upstream_repository"' 1>&2
@@ -37,7 +35,6 @@ git fetch upstream master
 LOCAL_COMMIT_HASH=$(git rev-parse "${INPUT_TARGET_BRANCH}")
 UPSTREAM_COMMIT_HASH=$(git rev-parse upstream/"${INPUT_UPSTREAM_BRANCH}")
 
-git stash apply
 
 if [ "${LOCAL_COMMIT_HASH}" = "${UPSTREAM_COMMIT_HASH}" ]; then
     echo 'No new commits to sync, exiting' 1>&1
@@ -48,6 +45,7 @@ fi
 echo 'New commits being pulled:' 1>&1
 git log upstream/"${INPUT_TARGET_BRANCH}" "${LOCAL_COMMIT_HASH}"..HEAD --pretty=oneline
 
+git merge upstream "${INPUT_UPSTREAM_BRANCH}" --allow-unrelated-histories
 # pull from upstream to target_branch
 echo 'Pulling...' 1>&1
 git pull upstream "${INPUT_UPSTREAM_BRANCH}"
