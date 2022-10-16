@@ -54,5 +54,5 @@ echo 'Pull successful' 1>&1
 
 # push to origin target_branch
 echo 'Pushing to target branch...' 1>&1
-git push origin "${INPUT_TARGET_BRANCH}" --allow-unrelated-histories
+git push origin "${INPUT_TARGET_BRANCH}"
 echo 'Push successful' 1>&1
